@@ -100,6 +100,10 @@ body {
   font-size: 15px;
 }
 
+.thai-subtitle span {
+  white-space: nowrap;
+}
+
 .calculator-panel {
   width: 100%;
 }
@@ -434,6 +438,10 @@ button:focus {
 
   .app-header .thai-subtitle {
     font-size: 13px;
+  }
+
+  .thai-subtitle span {
+    display: block;
   }
 
   .field-row {
