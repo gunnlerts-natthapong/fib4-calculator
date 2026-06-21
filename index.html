@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIB-4 Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="modal-overlay" id="disclaimerModal" role="dialog" aria-modal="true" aria-labelledby="disclaimerTitle">
+    <div class="modal-card">
+      <h2 id="disclaimerTitle">Disclaimer !</h2>
+      <p>
+        The developer of this app is not responsible for any medical errors made based on the information provided in this app.
+        The information contained within this app is not based on standard medical references.
+      </p>
+      <p class="modal-signature">Natthapong, MD</p>
+      <button type="button" id="acceptDisclaimer">OK</button>
+    </div>
+  </div>
+
+  <main class="calculator-shell">
+    <header class="app-header">
+      <h1>
+        FIB-4 Calculator
+        <span class="title-icons" aria-hidden="true">
+          <svg class="title-icon calculator-icon" viewBox="0 0 64 64">
+            <rect x="12" y="6" width="40" height="52" rx="8" fill="#2f6f9f"/>
+            <rect x="18" y="12" width="28" height="12" rx="3" fill="#dbefff"/>
+            <circle cx="22" cy="34" r="4" fill="#ffffff"/>
+            <circle cx="32" cy="34" r="4" fill="#ffffff"/>
+            <circle cx="42" cy="34" r="4" fill="#ffffff"/>
+            <circle cx="22" cy="46" r="4" fill="#ffffff"/>
+            <circle cx="32" cy="46" r="4" fill="#ffffff"/>
+            <circle cx="42" cy="46" r="4" fill="#ffffff"/>
+          </svg>
+          <svg class="title-icon liver-icon" viewBox="0 0 64 48">
+            <path d="M4.4 24.3C5.3 14 13.6 6.7 25 6.4c10.9-.3 20 4.8 20.7 13.9.5 6.3-5.5 10.9-13.9 16.1L16 46.2c-2.5 1.6-4.2.7-4.9-2.1L5.3 20.7" fill="#80252b"/>
+            <path d="M5.1 24.5C5.9 14.7 14 7.8 25 7.8c10.8 0 18.8 4.9 19.4 13.3.4 5.7-5.2 9.4-13 13.5-8.4 4.4-17.7 8.4-21.2 3.1-2.1-3.1-5.9-10.1-5.1-13.2Z" fill="#b62f3d"/>
+            <path d="M40.9 18.2c1.1-4.2 4.1-6.9 8.1-7.3 5.2-.5 11.3.6 13.4 3.8 1.9 2.9 1.1 6.6-2.3 10.3-3.8 4.1-9.5 8.2-14.4 9.5-4.9 1.3-7.4-.8-7.3-5.3.1-3.5 1.4-7.5 2.5-11Z" fill="#842730"/>
+            <path d="M42.5 18.4c1.2-3.5 3.9-5.6 7.4-5.8 4.5-.2 9.2.8 11.2 3.3 1.4 1.9.6 4.2-2.3 6.8-3.4 3-8 5.9-11.9 7-3.8 1-5.9-.4-5.7-3.7.1-2.3.7-5 1.3-7.6Z" fill="#b83240"/>
+            <path d="M36.4 13.8c2.9-.5 4.9 1.5 4.8 5.5l-.2 11.4c-.1 3.8-2.2 6-4.7 5.5-1.8-.3-2.9-1.9-2.8-4.2l.3-13.3c.1-2.7 1-4.4 2.6-4.9Z" fill="#d79a52"/>
+            <path d="M35.5 17.7c1.4-.4 2.4.7 2.3 2.8l-.3 8.6c-.1 2-1 3.2-2.2 3-1-.2-1.5-1-1.5-2.3l.2-9.4c.1-1.5.6-2.4 1.5-2.7Z" fill="#f0b66a"/>
+          </svg>
+        </span>
+      </h1>
+      <p><strong>Fibrosis-4 Index</strong> : Noninvasive estimate for Liver Fibrosis</p>
+      <p class="thai-subtitle">เครื่องมือคัดกรองความเสี่ยงการเกิดฟังผืดตับ สำหรับภาวะไขมันพอกตับ</p>
+    </header>
+
+    <section class="calculator-panel" aria-label="FIB-4 input form">
+      <form id="fib4Form" novalidate>
+        <div class="field-row" data-field="age">
+          <label for="age">Age</label>
+          <div class="input-stack">
+            <div class="input-with-unit">
+              <input type="number" id="age" min="18" max="100" step="1" inputmode="numeric" autocomplete="off">
+              <span class="unit">years</span>
+            </div>
+            <p class="message" id="ageMessage" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <div class="field-row" data-field="ast">
+          <label for="ast">AST</label>
+          <div class="input-stack">
+            <div class="input-with-unit">
+              <input type="number" id="ast" min="0" step="0.1" inputmode="decimal" autocomplete="off">
+              <span class="unit">U/L</span>
+            </div>
+            <p class="message" id="astMessage" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <div class="field-row" data-field="alt">
+          <label for="alt">ALT</label>
+          <div class="input-stack">
+            <div class="input-with-unit">
+              <input type="number" id="alt" min="0" step="0.1" inputmode="decimal" autocomplete="off">
+              <span class="unit">U/L</span>
+            </div>
+            <p class="message" id="altMessage" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <div class="field-row" data-field="platelet">
+          <label for="platelet">Platelet count</label>
+          <div class="input-stack">
+            <div class="input-with-unit">
+              <input type="number" id="platelet" min="0" step="0.1" inputmode="decimal" autocomplete="off">
+              <span class="unit">×10⁹/L</span>
+            </div>
+            <p class="message" id="plateletMessage" aria-live="polite"></p>
+          </div>
+        </div>
+      </form>
+
+      <div class="result-line" id="resultLine" aria-live="polite">
+        FIB-4 : <span>please fill out required fields.</span>
+      </div>
+
+      <article class="risk-card hidden" id="riskCard" aria-live="polite">
+        <div class="risk-heading">
+          <span class="risk-marker" id="riskMarker"></span>
+          <h2 id="riskTitle"></h2>
+        </div>
+        <p id="riskAdvice"></p>
+      </article>
+    </section>
+
+    <footer>
+      <p>For educational and clinical support use only. Clinical judgment is required.</p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
